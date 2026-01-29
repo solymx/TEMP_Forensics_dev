@@ -1,0 +1,29 @@
+description = "解析 Registry hives 與 Amcache，輸出可供 AI 分析的 CSV（時間線 / persistence / 程式執行痕跡）"
+
+prompt = """
+你是一位資深的 Windows 資安鑑識分析師。請依照下列步驟執行並產出報告。
+
+## Step 1 - 解析 Amcache
+- 調用 `parse_amcache(amcache_hve_path, case_name)` 產生 CSV。
+- 從輸出中找出：
+  - 可疑 EXE（位於 Desktop/Downloads/Temp/AppData/Users\\Public）
+  - 首次出現時間、路徑、雜湊/版本資訊（若有）
+  - 與使用者提到的可疑檔名關聯
+
+## Step 2 - 解析 Registry（RECmd）
+- 調用 `parse_registry_with_recmd(hives_dir, case_name)` 產生 CSV。
+- 聚焦下列主題：
+  1) Persistence：Run/RunOnce/Services/Scheduled Tasks/Winlogon/IFEO/COM hijack
+  2) 防禦迴避：Security/Audit policy 變更、Disable 防毒/策略
+  3) 使用者行為：近期執行、最近開啟、可疑路徑
+
+## Step 3 - 報告輸出
+- 產出「可行動」的摘要：
+  - 可疑項目清單（檔名/路徑/證據來源/時間）
+  - 高可信 vs 中可信 vs 低可信分類
+  - 後續建議要補哪些證據（Prefetch / Event Log / Autoruns / Network）
+
+輸出格式：
+1) 先用 Markdown 表格列出可疑項目
+2) 再用條列寫出調查結論與下一步
+"""

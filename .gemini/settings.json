@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "local-forensic": {
+      "command": "python",
+      "args": ["mcp-server/autoruns_mcp.py"]
+    },
+    "registry-forensic": {
+      "command": "python",
+      "args": ["mcp-server/registry_mcp.py"]
+    }
+  }
+}
